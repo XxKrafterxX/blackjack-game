@@ -1,8 +1,8 @@
-#_**Blackjack by d6ta**_
+Blackjack by d6ta
 This is a simple blackjack game I created. It is
 one of my first programming projects.
 
-###_**How I made it**_
+How I made it
 I have known about classes and the
 object-oriented style of Python for a while,
 although I've never utilized it in my code.
