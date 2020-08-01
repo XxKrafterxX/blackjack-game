@@ -19,13 +19,20 @@ class Player:
     card4 = 0
     totalHand = (card1 + card2 + card3 + card4)
 
+def printDelay(delay):
+    time.sleep(delay)
+
 def newHand():  # Generates a new random 1-11 value for dealer and player hand
     Dealer.card1 = random.randint(1, 11)
     Dealer.card2 = random.randint(1, 11)
+    Dealer.card3 = 0
+    Dealer.card4 = 0
     Dealer.totalHand = (Dealer.card1 + Dealer.card2 + Dealer.card3 + Dealer.card4)
 
     Player.card1 = random.randint(1, 11)
     Player.card2 = random.randint(1, 11)
+    Player.card3 = 0
+    Player.card4 = 0
     Player.totalHand = (Player.card1 + Player.card2 + Player.card3 + Player.card4)
 
 def hit(whoIsHitting):
@@ -39,10 +46,12 @@ def hit(whoIsHitting):
 def printHands():  # Print both users' hands to the console
     print("Your hand: ", Player.card1, Player.card2, Player.card3, Player.card4, "Total hand: ", Player.totalHand)
     print("Dealer's hand: ", Dealer.card1, " ?", Dealer.card3, Dealer.card4, "Total hand: ?")
+    printDelay(1)
 
 def printAllHands():  # Print hands, don't hide dealer's hand
     print("Your hand: ", Player.card1, Player.card2, Player.card3, Player.card4, "Total hand: ", Player.totalHand)
     print("Dealer's hand: ", Dealer.card1, Dealer.card2, Dealer.card3, Dealer.card4, "Total hand: ", Dealer.totalHand)
+    printDelay(1)
 
 def turn():
     newHand()
@@ -59,33 +68,55 @@ def turn():
         print("You will HIT.")
         hit(Player)
         printHands()
+        hitAgain = input("Would you like to hit again? (y/n): ")
+        if hitAgain == "y":
+            hit(Player)
+            printHands()
+
+        else:
+            print("You will not hit again.")
+
 
     elif action == "stand":
         print("You will STAND.")
         printHands()
 
+    printDelay(1)
     #### Dealer's Turn ####
     if Dealer.totalHand < 15:
         hit(Dealer)
         print("Dealer HITS.")
         printAllHands()
+        if Dealer.totalHand < 15:
+            hit(Dealer)
+            print("Dealer HITS again.")
+            printAllHands()
     elif Dealer.totalHand == 15 or Dealer.totalHand > 15:
         print("Dealer STANDS.")
         printAllHands()
 
     #### Check who's card is closer ####
     if Dealer.totalHand == 21:  # Dealer blackjack
+        printDelay(3)
         print("DEALER has blackjack, DEALER wins.")
     elif Player.totalHand == 21:  # Player blackjack
+        printDelay(3)
         print("PLAYER has blackjack, PLAYER wins.")
     elif Player.totalHand > 21:  # Player bust
+        printDelay(3)
         print("PLAYER busts, DEALER wins.")
     elif Dealer.totalHand > 21:  # Dealer bust
+        printDelay(3)
         print("DEALER busts, PLAYER wins.")
     elif Player.totalHand < Dealer.totalHand:  # PLAYER hand LESS than DEALER hand
+        printDelay(3)
         print("DEALER has higher hand than PLAYER, DEALER wins.")
     elif Dealer.totalHand < Player.totalHand:  # DEALER hand LESS than PLAYER hand.
+        printDelay(3)
         print("PLAYER has higher hand than DEALER, PLAYER wins.")
+    elif Dealer.totalHand == Player.totalHand:
+        printDelay(3)
+        print("DEALER and PLAYER have same hand, DEALER wins.")
 
 
 while True:
